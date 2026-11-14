@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#173d35">
+  <title>Тихая бухта — бронирование домов</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="Тихая бухта — главная">
+      <span class="brand-mark">⌂</span><span>тихая бухта<small>загородный отдых</small></span>
+    </a>
+    <nav aria-label="Основная навигация">
+      <a href="#cottages">Домики</a><a href="#my-bookings">Мои брони</a>
+    </nav>
+    <span class="demo-pill">Учебный проект</span>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div>
+        <p class="eyebrow">МЕСТО, ГДЕ МОЖНО ВЫДОХНУТЬ</p>
+        <h1>Ваш тихий уголок<br>у самого леса</h1>
+        <p class="intro-copy">Выберите домик на карте посёлка, укажите даты отдыха и узнайте стоимость.</p>
+        <a class="primary-link" href="#cottages">Выбрать домик <span>↓</span></a>
+      </div>
+      <div class="intro-art" aria-hidden="true">
+        <div class="sun"></div><div class="hill hill-back"></div><div class="hill hill-front"></div>
+        <div class="art-cabin"><span></span></div>
+        <div class="art-tree tree-one">♣</div><div class="art-tree tree-two">♣</div>
+        <span class="art-label">лес · озеро · тишина</span>
+      </div>
+    </section>
+
+    <section id="cottages" class="booking-section">
+      <div class="section-heading">
+        <div><p class="eyebrow">ПОСЁЛОК «ТИХАЯ БУХТА»</p><h2>Найдите свой домик</h2></div>
+        <p class="muted">8 уютных домиков среди сосен</p>
+      </div>
+
+      <div class="filters panel">
+        <label>Гостей
+          <select id="guest-filter">
+            <option value="1">От 1 гостя</option><option value="2">От 2 гостей</option>
+            <option value="4">От 4 гостей</option><option value="6">От 6 гостей</option>
+          </select>
+        </label>
+        <label>Цена за ночь — до <output id="price-output">15 000 ₽</output>
+          <input id="price-filter" type="range" min="3000" max="15000" step="500" value="15000">
+        </label>
+        <button id="reset-filters" class="text-button" type="button">Сбросить фильтры</button>
+      </div>
+
+      <div class="explorer">
+        <div class="map-column">
+          <div class="map-caption"><strong>Карта посёлка</strong><span>Нажмите на домик</span></div>
+          <div class="village-map" id="village-map" aria-label="Схема посёлка с домиками">
+            <div class="lake"><span>озеро<br>Зеркальное</span></div>
+            <div class="road road-main"></div><div class="road road-side"></div>
+            <div class="forest forest-a">♣</div><div class="forest forest-b">♣</div>
+            <div class="forest forest-c">♣</div><div class="forest forest-d">♣</div>
+            <div class="map-legend">
+              <span><i class="dot free"></i> Свободен</span>
+              <span><i class="dot selected"></i> Выбран</span>
+              <span><i class="dot occupied"></i> Занят</span>
+            </div>
+          </div>
+          <p class="map-note">Схема условная. Расположение домиков показано для учебного демо.</p>
+        </div>
+
+        <div class="list-column">
+          <div class="list-heading"><strong>Домики</strong><span id="results-count" class="muted"></span></div>
+          <div id="cottage-list" class="cottage-list"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="details-grid">
+      <article class="panel selected-panel" aria-live="polite">
+        <div class="panel-title"><div><p class="eyebrow">ВАШ ВЫБОР</p><h2 id="detail-title">Выберите домик</h2></div><span id="detail-status" class="status-badge">Не выбран</span></div>
+        <p id="detail-description" class="muted">Нажмите на свободный домик на карте или выберите его в списке, чтобы увидеть подробности.</p>
+        <div id="booking-form-wrap" hidden>
+          <div class="detail-meta"><span id="detail-capacity"></span><span id="detail-price"></span></div>
+          <form id="booking-form" novalidate>
+            <div class="form-row">
+              <label>Дата заезда<input id="checkin-date" type="date" required><small class="field-error" id="date-error"></small></label>
+              <label>Дата выезда<input id="checkout-date" type="date" required><small class="field-error" id="checkout-error"></small></label>
+              <label>Количество гостей<input id="guest-count" type="number" min="1" max="8" value="2" required><small class="field-error" id="guest-error"></small></label>
+              <label>Количество ночей<input id="night-count" type="number" min="1" max="30" value="2" readonly required><small class="field-error" id="night-error"></small></label>
+            </div>
+            <div class="total-line"><span>Итого за проживание</span><strong id="total-price">—</strong></div>
+            <button class="primary-button" id="confirm-booking" type="submit">Подтвердить учебную бронь</button>
+            <p id="form-message" class="form-message" role="status"></p>
+          </form>
+        </div>
+      </article>
+      <aside class="panel how-panel">
+        <p class="eyebrow">КАК ЭТО РАБОТАЕТ</p>
+        <h2>Отдых начинается просто</h2>
+        <ol><li><span>01</span> Выберите свободный домик</li><li><span>02</span> Укажите даты и гостей</li><li><span>03</span> Подтвердите бронь</li></ol>
+        <p class="fine-print">Учебное демо: бронирования сохраняются только в этом браузере. Реальная бронь и оплата не оформляются.</p>
+      </aside>
+    </section>
+
+    <section id="my-bookings" class="my-bookings">
+      <div class="section-heading"><div><p class="eyebrow">ВАШИ ПЛАНЫ</p><h2>Мои брони</h2></div><span id="booking-count" class="muted">Пока нет броней</span></div>
+      <div id="bookings-list" class="bookings-list"><div class="empty-state">Здесь появятся ваши подтверждённые учебные брони.</div></div>
+      <div class="storage-row"><p id="storage-message" role="status">Данные сохраняются локально в браузере.</p><button id="reset-demo" class="text-button danger-text" type="button">Сбросить демо</button></div>
+    </section>
+  </main>
+
+  <footer><span>⌂ тихая бухта</span><span>Учебный проект · HTML, CSS и JavaScript</span></footer>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
